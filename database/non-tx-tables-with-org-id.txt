@@ -1,5 +1,3 @@
-account
-account_admin
 address_level
 address_level_type
 approval_status
