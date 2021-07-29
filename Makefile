@@ -32,8 +32,8 @@ endif
 	sudo -u postgres psql -d openchs -c 'create extension if not exists "uuid-ossp"'
 	sudo -u postgres psql -d openchs -c 'create extension if not exists "ltree"'
 	sudo -u postgres psql -d openchs -c 'create extension if not exists "hstore"'
-	sudo -u postgres psql -d openchs -c "create role '$(dbUser)' noinherit login password 'password')"
-	sudo -u postgres psql -d openchs -c "grant '$(dbUser)' to openchs'"
+	sudo -u postgres psql -d openchs -c "create role $(dbUser) noinherit login password password)"
+	sudo -u postgres psql -d openchs -c "grant $(dbUser) to openchs"
 
 import-dump:
 	sudo -u postgres psql openchs -f '/tmp/avni-dump.sql'
