@@ -27,6 +27,7 @@ endif
 	sudo -u postgres psql -c "SELECT pg_terminate_backend(pg_stat_activity.pid) FROM pg_stat_activity WHERE pg_stat_activity.datname = 'openchs' AND pid <> pg_backend_pid()"
 	-sudo -u postgres psql -c 'drop database openchs'
 	-sudo -u postgres psql -c 'drop role openchs'
+	-sudo -u postgres psql -c 'drop role $(dbUser)'
 	-sudo -u postgres psql -c "create user openchs with password 'password' createrole"
 	sudo -u postgres psql -c 'create database openchs with owner openchs'
 	sudo -u postgres psql -d openchs -c 'create extension if not exists "uuid-ossp"'
