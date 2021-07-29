@@ -3,3 +3,4 @@ organisation
 organisation_group
 privilege
 approval_status
+schema_version

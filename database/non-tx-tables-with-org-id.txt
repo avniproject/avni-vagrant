@@ -1,5 +1,5 @@
-address_level
 address_level_type
+address_level
 catchment
 checklist
 checklist_item
@@ -50,7 +50,6 @@ program_outcome
 report_card
 rule
 rule_dependency
-schema_version
 standard_report_card_type
 subject_type
 translation
