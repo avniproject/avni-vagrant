@@ -47,7 +47,6 @@ platform_translation
 privilege
 program
 program_organisation_config
-program_organisation_config_at_risk_concept
 program_outcome
 report_card
 rule

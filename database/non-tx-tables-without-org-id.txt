@@ -1,2 +1,5 @@
 account
 account_admin
+catchment_address_mapping
+decision_concept
+deps_saved_ddl

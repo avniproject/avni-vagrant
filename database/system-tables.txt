@@ -1,3 +1,7 @@
+flyway_schema_history
+organisation
+organisation_group
+privilege
 approval_status
 batch_job_execution
 batch_job_execution_context

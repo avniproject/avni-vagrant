@@ -8,10 +8,14 @@ tunnel-avni-prod-read:
 get-schema-def:
 	pg_dump --host localhost --port 2203 --username openchs --schema-only --verbose --file /tmp/avni-schema.sql openchs
 
-export-table:
-	#psql -h localhost -p 2203 -U openchs -c "COPY (SELECT * FROM concept limit 100) TO STDOUT;" openchs
-	sh database/export-tables.sh $(orgId)
-
+create-db:
+	sudo -u postgres psql -c "SELECT pg_terminate_backend(pg_stat_activity.pid) FROM pg_stat_activity WHERE pg_stat_activity.datname = 'openchs' AND pid <> pg_backend_pid()"
+	-sudo -u postgres psql -c "create user openchs with password 'password'"
+	-sudo -u postgres psql -c 'drop database openchs'
+	sudo -u postgres psql -c 'create database openchs with owner openchs'
+	sudo -u postgres psql -c 'create extension if not exists "uuid-ossp"'
+	sudo -u postgres psql openchs -f '/tmp/avni-schema.sql'
+#	sh database/export-tables.sh $(orgId)
 
 #individual
 #individual_relationship
