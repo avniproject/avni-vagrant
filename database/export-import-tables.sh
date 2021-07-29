@@ -4,6 +4,6 @@ Tables="audit individual program_enrolment"
 
 for Table in $Tables
 	do
-  		echo Export/Importing table $Table
-  		psql -h localhost -p 2203 -U $1 -c "COPY (SELECT * FROM $Table) TO STDOUT;" openchs | psql -h localhost -U $Table -c "COPY $Table FROM STDIN;" openchs
+  		echo "Export/Importing table $Table for $1"
+  		psql -h localhost -p 2203 -U $1 -c "COPY (SELECT * FROM $Table) TO STDOUT;" openchs | psql -h localhost -U $1 -c "COPY $Table FROM STDIN;" openchs
   done
