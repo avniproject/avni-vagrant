@@ -61,15 +61,11 @@ program_outcome
 report_card
 rule
 rule_dependency
-rule_failure_log
-rule_failure_telemetry
 schema_version
 standard_report_card_type
 subject_type
-sync_telemetry
 translation
 user_facility_mapping
 user_group
 users
 video
-video_telemetric

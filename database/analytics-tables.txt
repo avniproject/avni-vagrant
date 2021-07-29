@@ -1,0 +1,4 @@
+rule_failure_log
+rule_failure_telemetry
+sync_telemetry
+video_telemetric
