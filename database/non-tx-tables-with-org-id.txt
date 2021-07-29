@@ -1,7 +1,6 @@
 address_level
 address_level_type
 catchment
-catchment_address_mapping
 checklist
 checklist_item
 concept
