@@ -14,9 +14,8 @@ create-db:
 	-sudo -u postgres psql -c 'drop database openchs'
 	sudo -u postgres psql -c 'create database openchs with owner openchs'
 	-sudo -u postgres psql -d openchs -c 'create extension if not exists "uuid-ossp"';
-	-psql -h localhost -U $(su) -d $(database) -c 'create extension if not exists "ltree"';
-	-psql -h localhost -U $(su) -d $(database) -c 'create extension if not exists "hstore"';
-	sudo -u postgres psql -c 'create extension if not exists "uuid-ossp"'
+	-sudo -u postgres psql -d openchs -c 'create extension if not exists "ltree"';
+	-sudo -u postgres psql -d openchs -c 'create extension if not exists "hstore"';
 
 create-schema:
 	sudo -u postgres psql openchs -f '/tmp/avni-schema.sql'
