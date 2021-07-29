@@ -13,9 +13,22 @@ create-db:
 	-sudo -u postgres psql -c "create user openchs with password 'password'"
 	-sudo -u postgres psql -c 'drop database openchs'
 	sudo -u postgres psql -c 'create database openchs with owner openchs'
+	-sudo -u postgres psql -d openchs -c 'create extension if not exists "uuid-ossp"';
+	-psql -h localhost -U $(su) -d $(database) -c 'create extension if not exists "ltree"';
+	-psql -h localhost -U $(su) -d $(database) -c 'create extension if not exists "hstore"';
 	sudo -u postgres psql -c 'create extension if not exists "uuid-ossp"'
+
+create-schema:
 	sudo -u postgres psql openchs -f '/tmp/avni-schema.sql'
-#	sh database/export-tables.sh $(orgId)
+
+import-tables:
+ifndef orgId
+	@echo "Please specify orgId"
+	exit 1
+endif
+	sh database/export-import-tables.sh $(orgId)
+
+create-db-full: create-db create-schema import-tables
 
 #individual
 #individual_relationship
