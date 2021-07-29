@@ -5,8 +5,19 @@ create-vagrant-ssh:
 tunnel-avni-prod-read:
 	ssh avni-server-prod -L 2203:serverdb.read.openchs.org:5432
 
-get-schema-def:
-	pg_dump --host localhost --port 2203 --username openchs --schema-only --verbose --file /tmp/avni-schema.sql openchs
+dump-org:
+ifndef dbUser
+	@echo "Please specify dbUser for the organisation"
+	exit 1
+endif
+	pg_dump --host localhost --port 2203 --username $(dbUser) --file /tmp/avni-dump.sql -T account -T individual -T audit -T individual_relationship -T individual_relationship_type -T program_encounter -T program_enrolment -T encounter -T checklist_detail -T checklist_item_detail --enable-row-security openchs
+
+export-import-tables:
+ifndef dbUser
+	@echo "Please specify dbUser for the organisation"
+	exit 1
+endif
+	sh database/export-import-tables.sh $(dbUser)
 
 create-db:
 	sudo -u postgres psql -c "SELECT pg_terminate_backend(pg_stat_activity.pid) FROM pg_stat_activity WHERE pg_stat_activity.datname = 'openchs' AND pid <> pg_backend_pid()"
@@ -17,17 +28,10 @@ create-db:
 	-sudo -u postgres psql -d openchs -c 'create extension if not exists "ltree"';
 	-sudo -u postgres psql -d openchs -c 'create extension if not exists "hstore"';
 
-create-schema:
-	sudo -u postgres psql openchs -f '/tmp/avni-schema.sql'
+import-dump:
+	sudo -u postgres psql openchs -f '/tmp/avni-dump.sql'
 
-import-tables:
-ifndef orgId
-	@echo "Please specify orgId"
-	exit 1
-endif
-	sh database/export-import-tables.sh $(orgId)
-
-create-db-full: create-db create-schema import-tables
+create-db-full: create-db import-dump export-import-tables
 
 #individual
 #individual_relationship
