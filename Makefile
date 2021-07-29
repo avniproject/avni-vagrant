@@ -20,13 +20,19 @@ endif
 	sh database/export-import-tables.sh $(dbUser)
 
 create-db:
+ifndef dbUser
+	@echo "Please specify dbUser for the organisation"
+	exit 1
+endif
 	sudo -u postgres psql -c "SELECT pg_terminate_backend(pg_stat_activity.pid) FROM pg_stat_activity WHERE pg_stat_activity.datname = 'openchs' AND pid <> pg_backend_pid()"
 	-sudo -u postgres psql -c 'drop database openchs'
+	-sudo -u postgres psql -c 'drop role openchs'
 	-sudo -u postgres psql -c "create user openchs with password 'password' createrole"
 	sudo -u postgres psql -c 'create database openchs with owner openchs'
 	-sudo -u postgres psql -d openchs -c 'create extension if not exists "uuid-ossp"';
 	-sudo -u postgres psql -d openchs -c 'create extension if not exists "ltree"';
 	-sudo -u postgres psql -d openchs -c 'create extension if not exists "hstore"';
+	-sudo -u postgres psql -d openchs -c "select create_db_user($(dbUser), 'password')";
 
 import-dump:
 	sudo -u postgres psql openchs -f '/tmp/avni-dump.sql'
