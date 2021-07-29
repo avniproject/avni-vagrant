@@ -1,7 +1,7 @@
 for TABLE in $(cat ./database/non-tx-tables-with-org-id.txt)
 	do
   		echo Exporting table $TABLE
-  		psql -h localhost -p 2203 -U openchs -c "COPY (SELECT * FROM $TABLE where (organisation_id in ($1, 1)) TO STDOUT;" openchs | psql -h localhost -U openchs -c "COPY $TABLE FROM STDIN;" openchs
+  		psql -h localhost -p 2203 -U openchs -c "COPY (SELECT * FROM $TABLE where organisation_id in ($1, 1)) TO STDOUT;" openchs | psql -h localhost -U openchs -c "COPY $TABLE FROM STDIN;" openchs
   done
 
 psql -h localhost -p 2203 -U openchs -c "COPY (SELECT * FROM account) TO STDOUT;" openchs | psql -h localhost -U openchs -c "COPY account FROM STDIN;" openchs
