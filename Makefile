@@ -10,7 +10,7 @@ ifndef dbUser
 	@echo "Please specify dbUser for the organisation"
 	exit 1
 endif
-	pg_dump --host localhost --port 2203 --username $(dbUser) --file /tmp/avni-dump.sql -T account -T individual -T audit -T individual_relationship -T individual_relationship_type -T program_encounter -T program_enrolment -T encounter -T checklist_detail -T checklist_item_detail --enable-row-security openchs
+	pg_dump --host localhost --port 2203 --username $(dbUser) --file /tmp/avni-dump.sql --exclude-table-data account --exclude-table-data individual --exclude-table-data audit --exclude-table-data individual_relationship --exclude-table-data individual_relationship_type --exclude-table-data program_encounter ---exclude-table-data program_enrolment --exclude-table-data encounter --exclude-table-data checklist_detail --exclude-table-data checklist_item_detail --enable-row-security openchs
 
 export-import-tables:
 ifndef dbUser
