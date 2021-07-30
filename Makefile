@@ -42,6 +42,16 @@ import-dump:
 
 create-db-full: create-db import-dump export-import-tables
 
+start-server:
+	OPENCHS_MODE=live \
+    	OPENCHS_COGNITO_IN_DEV=false \
+    	OPENCHS_CLIENT_ID=$(APP_CLIENT_ID) \
+    	OPENCHS_USER_POOL=$(USER_POOL_ID) \
+    	OPENCHS_IAM_USER=$(IAM_USER) \
+    	OPENCHS_IAM_USER_ACCESS_KEY=$(IAM_USER_ACCESS_KEY) \
+    	OPENCHS_IAM_USER_SECRET_ACCESS_KEY=$(IAM_USER_SECRET_ACCESS_KEY)
+	cd ../avni-server && java -jar openchs-server-api/build/libs/openchs-server-0.0.1-SNAPSHOT.jar
+
 #individual
 #individual_relationship
 #individual_relationship_type
