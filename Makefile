@@ -11,6 +11,7 @@ ifndef dbUser
 	exit 1
 endif
 	pg_dump --host localhost --port 2203 --username $(dbUser) --file /tmp/avni-dump.sql -T account --exclude-table-data=individual --exclude-table-data=audit --exclude-table-data=individual_relationship --exclude-table-data=individual_relationship_type --exclude-table-data=program_encounter --exclude-table-data=program_enrolment --exclude-table-data=encounter --exclude-table-data=checklist_detail --exclude-table-data=checklist_item_detail --enable-row-security openchs
+	psql -U openchs -h localhost -c "CREATE TABLE account (id serial primary key, name varchar(255) not null);"
 
 export-import-tables:
 ifndef dbUser
